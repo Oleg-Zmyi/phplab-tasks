@@ -12,6 +12,16 @@
  */
 function getMinuteQuarter(int $minute)
 {
+    if( $minute > 0 && $minute <= 15 )
+        return 'first';
+    elseif ($minute >= 16 && $minute <= 30)
+        return 'second';
+    elseif ($minute >= 31 && $minute <= 45)
+        return 'third';
+    elseif ($minute >= 46 && $minute < 60 || $minute == 0)
+        return 'fourth';
+    else
+        throw new InvalidArgumentException("wrong  $minute. enter beetwen 0 - 59");
 }
 
 /**
