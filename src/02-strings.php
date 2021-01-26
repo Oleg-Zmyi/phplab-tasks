@@ -9,8 +9,8 @@
  */
 function snakeCaseToCamelCase(string $input)
 {
-    $input = ucwords(str_replace("_", " ", $input));
-    $input = lcfirst(str_replace(" ", "", $input));
+    $input = ucwords( str_replace("_", " ", $input) );
+    $input = lcfirst( str_replace(" ", "", $input) );
     return $input;
 }
 
