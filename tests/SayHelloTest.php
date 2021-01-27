@@ -14,6 +14,8 @@ class SayHelloTest extends TestCase
 
     public function positiveDataProvider()
     {
-        return 'Hello';
+        return [
+            ['Hello', 'Hello'],
+        ];
     }
 }
