@@ -9,9 +9,51 @@
  * @param  array  $airports
  * @return string[]
  */
-function getUniqueFirstLetters(array $airports)
+function getUniqueFirstLetters(array $airports) : array
 {
-    // put your logic here
+    $letters = array();
+    foreach ($airports as $airport){
+        $letters []= substr($airport["name"], 0, 1);
+    }
+    $firstLetters = array_unique($letters);
+    sort($firstLetters);
+    return $firstLetters;
+}
 
-    return ['A', 'B', 'C'];
+function filterByFirstLetter(array $airports, string $firstLetter) : array
+{
+    $resultArr = array();
+    foreach ($airports as $airport){
+        if (substr($airport["name"], 0, 1) == $firstLetter){
+            $resultArr []= $airport;
+        }
+    }
+    return $resultArr;
+}
+
+function sorting(array $airports, string $value) : array
+{
+    $sortColumn = array_column($airports, $value);
+    array_multisort($sortColumn, SORT_ASC, $airports);
+    return $airports;
+}
+
+function filterByState (array $airports, $state) : array
+{
+    $resultArr = array();
+    foreach ($airports as $airport){
+        if ( $airport["state"] == $state){
+            $resultArr []= $airport;
+        }
+    }
+    return $resultArr;
+}
+
+function resetPage(array $get) : array
+{
+    $resultArr = $get;
+    if (!empty($get['page'])){
+        unset($resultArr['page']);
+    }
+    return $resultArr;
 }
