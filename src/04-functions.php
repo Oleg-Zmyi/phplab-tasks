@@ -38,9 +38,8 @@ function sayHelloArgumentWrapper($arg)
     if (gettype($arg) == 'integer' || gettype($arg) == 'string' || gettype($arg) == 'boolean' ){
         return sayHelloArgument($arg);
     }
-    throw new InvalidArgumentException("Wrong  $arg. Please, enter correct argument");
+    throw new InvalidArgumentException("Wrong. Please, enter correct argument");
 }
-
 /**
  * Create a PhpUnit test (CountArgumentsTest) which will check that function below returns correct result
  * Check how it works with: no arguments, one string argument, a couple of string arguments
@@ -68,11 +67,15 @@ function countArguments()
  * @return array
  * @throws InvalidArgumentException
  */
-function countArgumentsWrapper()
+function countArgumentsWrapper($arg)
 {
-    foreach (func_get_args() as $arg){
-        if (!is_string($arg))
-            throw new InvalidArgumentException("Some argument is not the type string");
+    if ($arg){
+        foreach (func_get_args() as $arg){
+            if (!is_string($arg))
+                throw new InvalidArgumentException("Some argument is not the type string");
+        }
+        return countArguments();
+    } else{
+        throw new InvalidArgumentException("You have to input some arguments");
     }
-    return countArguments();
 }

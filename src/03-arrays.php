@@ -10,7 +10,7 @@
  */
 function repeatArrayValues(array $input)
 {
-    $result = array();
+    $result = [];
     foreach ($input as $num) {
         for ($i = 0; $i < $num; $i++) {
             $result[] = $num;
@@ -29,23 +29,18 @@ function repeatArrayValues(array $input)
  */
 function getUniqueValue(array $input)
 {
-    if (!empty($input)) {
-        $counts = array_count_values($input);
-        $result = [];
-        for ($i = 0; $i < count($input); ++$i) {
-            foreach ($counts as $key => $value) {
-                if ($input[$i] == $key && $value == 1) {
-                    $result[] = $input[$i];
-                    break;
-                }
+    if ($input){
+        $res = [];
+        $input = array_count_values($input);
+        foreach ($input as $key => $count ){
+            if ($count<2){
+                $res []= $key;
             }
         }
-        if (!empty($result))
-            return min($result);
-        else
-            return 0;
-    } else
+        return $res ? min($res) : 0;
+    } else {
         return 0;
+    }
 }
 
 /**

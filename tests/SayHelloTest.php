@@ -6,10 +6,11 @@ class SayHelloTest extends TestCase
 {
     /**
      * @dataProvider positiveDataProvider
+     * @param $input
      */
-    public function testPositive()
+    public function testPositive($input)
     {
-        $this->assertEquals("Hello", sayHello());
+        $this->assertEquals($input, sayHello());
     }
 
     public function positiveDataProvider()
