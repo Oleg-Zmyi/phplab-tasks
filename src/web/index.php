@@ -50,6 +50,7 @@ if ($pages>1){
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
 </head>
 <body>
 <main role="main" class="container">
@@ -152,7 +153,7 @@ if ($pages>1){
                             <?php
                         }
                         if (($i==1 && $currentPage > 6) || ($i == $pages - 1 && $currentPage < ($pages - 6))){
-                            $switchPages = $i == 1 ? $currentPage - 5 : $currentPage + 5;
+                            $switchPages = $i == 1 ? $currentPage - $perPage : $currentPage + $perPage;
                             ?>
                             <li class="page-item <?= $currentPage == $i ? 'active' : '' ?>">
                                 <a class="page-link" href="/?<?= http_build_query(array_merge($_GET, ['page' => $switchPages])) ?>"><?= $i == 1 ? '<<' : '>>' ?></a>
