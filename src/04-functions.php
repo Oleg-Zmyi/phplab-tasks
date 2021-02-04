@@ -35,7 +35,7 @@ function sayHelloArgument($arg)
  */
 function sayHelloArgumentWrapper($arg)
 {
-    if (gettype($arg) == 'integer' || gettype($arg) == 'string' || gettype($arg) == 'boolean' ){
+    if (gettype($arg) == 'integer' || (gettype($arg) == 'string' && strlen($arg) !== 0) || gettype($arg) == 'boolean' ){
         return sayHelloArgument($arg);
     }
     throw new InvalidArgumentException("Wrong. Please, enter correct argument");
@@ -67,15 +67,11 @@ function countArguments()
  * @return array
  * @throws InvalidArgumentException
  */
-function countArgumentsWrapper($arg)
+function countArgumentsWrapper()
 {
-    if ($arg){
         foreach (func_get_args() as $arg){
             if (!is_string($arg))
                 throw new InvalidArgumentException("Some argument is not the type string");
         }
-        return countArguments();
-    } else{
-        throw new InvalidArgumentException("You have to input some arguments");
-    }
+        return countArguments(...func_get_args());
 }

@@ -12,17 +12,16 @@
  */
 function getMinuteQuarter(int $minute)
 {
-    if( $minute > 0 && $minute <= 15 ){
+    if( $minute > 0 && $minute <= 15 ) {
         return 'first';
-    } elseif ($minute >= 16 && $minute <= 30){
+    } elseif ($minute >= 16 && $minute <= 30) {
         return 'second';
-    } elseif ($minute >= 31 && $minute <= 45){
+    } elseif ($minute >= 31 && $minute <= 45) {
         return 'third';
-    } elseif ($minute >= 46 && $minute < 60 || $minute == 0){
+    } elseif ($minute >= 46 && $minute < 60 || $minute == 0) {
         return 'fourth';
-    } else{
-        throw new InvalidArgumentException("Wrong  $minute. Please, enter number beetwen 0 - 59");
     }
+    throw new InvalidArgumentException("Wrong  $minute. Please, enter number beetwen 0 - 59");
 }
 
 /**
@@ -40,9 +39,8 @@ function isLeapYear(int $year)
 {
     if($year >= 1900) {
         return (($year % 4 == 0 && $year % 100 !== 0) || ($year % 400 == 0));
-    } else {
-        throw new InvalidArgumentException("Wrong  $year. Please, enter year more than 1900");
     }
+    throw new InvalidArgumentException("Wrong  $year. Please, enter year more than 1900");
 }
 
 /**
@@ -60,7 +58,6 @@ function isSumEqual(string $input)
 {
     if(strlen($input) !== 6){
         throw new InvalidArgumentException("Wrong  $input. Please, enter 6 numbers");
-    } else {
-        return ($input[0] + $input[1] + $input[2] == $input[3] + $input[4] + $input[5]);
     }
+    return ($input[0] + $input[1] + $input[2] == $input[3] + $input[4] + $input[5]);
 }

@@ -7,10 +7,10 @@
  * @param  string  $input
  * @return string
  */
+
 function snakeCaseToCamelCase(string $input)
 {
-    $input = lcfirst( str_replace(" ", "", ucwords( str_replace("_", " ", $input) )) );
-    return $input;
+    return lcfirst( str_replace(" ", "", ucwords( str_replace("_", " ", $input) )) );
 }
 
 /**

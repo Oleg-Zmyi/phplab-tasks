@@ -29,18 +29,14 @@ function repeatArrayValues(array $input)
  */
 function getUniqueValue(array $input)
 {
-    if ($input){
-        $res = [];
-        $input = array_count_values($input);
-        foreach ($input as $key => $count ){
-            if ($count<2){
-                $res []= $key;
-            }
+    $res = [];
+    $input = array_count_values($input);
+    foreach ($input as $key => $count) {
+        if ($count < 2) {
+            $res [] = $key;
         }
-        return $res ? min($res) : 0;
-    } else {
-        return 0;
     }
+    return $res ? min($res) : 0;
 }
 
 /**

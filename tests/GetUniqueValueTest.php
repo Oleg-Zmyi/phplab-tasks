@@ -6,6 +6,8 @@ class GetUniqueValueTest extends TestCase
 {
     /**
      * @dataProvider positiveDataProvider
+     * @param $input
+     * @param $expected
      */
     public function testPositive($input, $expected)
     {
