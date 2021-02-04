@@ -56,7 +56,7 @@ function isLeapYear(int $year)
  */
 function isSumEqual(string $input)
 {
-    if(strlen($input) !== 6){
+    if(strlen($input) !== 6) {
         throw new InvalidArgumentException("Wrong  $input. Please, enter 6 numbers");
     }
     return ($input[0] + $input[1] + $input[2] == $input[3] + $input[4] + $input[5]);

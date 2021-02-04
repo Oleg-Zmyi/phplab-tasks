@@ -25,7 +25,7 @@ function mirrorMultibyteString(string $input)
 {
     $input = mb_split(' ', $input);
     $result = '';
-    foreach ($input as $word){
+    foreach ($input as $word) {
         $word = join('', array_reverse(preg_split('//u', $word, -1, PREG_SPLIT_NO_EMPTY)));
         $result .= $word.' ';
     }
@@ -49,10 +49,9 @@ function mirrorMultibyteString(string $input)
 function getBrandName(string $noun)
 {
     $noun = strtolower($noun);
-    if ($noun[0] === $noun[-1]){
+    if ($noun[0] === $noun[-1]) {
         $noun = ucfirst($noun) . substr($noun, 1);
-    }
-    else{
+    } else {
         $noun = "The " . ucfirst($noun) ;
     };
     return $noun;
