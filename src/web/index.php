@@ -3,7 +3,6 @@ require_once './functions.php';
 
 $airports = require './airports.php';
 
-// Filtering
 /**
  * Here you need to check $_GET request if it has any filtering
  * and apply filtering by First Airport Name Letter and/or Airport State
@@ -34,10 +33,11 @@ if (!empty($_GET['sort'])) {
  */
 $perPage = 5;
 $pages = ceil(count($airports) / $perPage);
-$currentPage = $_GET["page"] ? $_GET["page"] : 1;
+$currentPage = $_GET["page"] ?? 1;
 if ($pages>1){
     $airports = array_slice( $airports, (($currentPage - 1) * $perPage),   $perPage );
 }
+
 ?>
 
 <!doctype html>
@@ -47,10 +47,10 @@ if ($pages>1){
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <title>Airports</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-
 </head>
 <body>
 <main role="main" class="container">
@@ -71,7 +71,8 @@ if ($pages>1){
         Filter by first letter:
 
         <?php foreach (getUniqueFirstLetters(require './airports.php') as $letter): ?>
-            <a href="?filter_by_first_letter=<?= $letter ?>"><?= $letter ?></a>
+            <!--            <a href="?filter_by_first_letter=--><?//= $letter ?><!--">--><?//= $letter ?><!--</a>-->
+            <a href="?<?= http_build_query(array_merge($_GET, ['filter_by_first_letter' => $letter, 'page' => 1])) ?>"><?= $letter ?></a>
         <?php endforeach; ?>
 
         <a href="/" class="float-right">Reset all filters</a>
@@ -87,41 +88,53 @@ if ($pages>1){
            i.e. if you already have /?page=2&filter_by_first_letter=A after applying sorting the url should looks like
            /?page=2&filter_by_first_letter=A&sort=name
     -->
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col"><a href="/?<?= http_build_query(array_merge($_GET, ['sort' => 'name'])) ?>">Name</a></th>
-            <th scope="col"><a href="/?<?= http_build_query(array_merge($_GET, ['sort' => 'code'])) ?>">Code</a></th>
-            <th scope="col"><a href="/?<?= http_build_query(array_merge($_GET, ['sort' => 'state'])) ?>">State</a></th>
-            <th scope="col"><a href="/?<?= http_build_query(array_merge($_GET, ['sort' => 'city'])) ?>">City</a></th>
-            <th scope="col">Address</th>
-            <th scope="col">Timezone</th>
-        </tr>
-        </thead>
-        <tbody>
-        <!--
-            Filtering task #2
-            Replace # in HREF so that link follows to the same page with the filter_by_state key
-            i.e. /?filter_by_state=A or /?filter_by_state=B
 
-            Make sure, that the logic below also works:
-             - when you apply filter_by_state the page should be equal 1
-             - when you apply filter_by_state, than filter_by_first_letter (see Filtering task #1) is not reset
-               i.e. if you have filter_by_first_letter set you can additionally use filter_by_state
-        -->
-        <?php foreach ($airports as $airport): ?>
+    <table class="table">
+        <?php if ($airports) : ?>
+            <thead>
             <tr>
-                <td><?= $airport['name'] ?></td>
-                <td><?= $airport['code'] ?></td>
-                <td>
-                    <a href="/?<?= http_build_query(array_merge(resetPage($_GET), ['filter_by_state' => $airport['state']])) ?>"><?= $airport['state'] ?></a>
-                </td>
-                <td><?= $airport['city'] ?></td>
-                <td><?= $airport['address'] ?></td>
-                <td><?= $airport['timezone'] ?></td>
+                <th scope="col"><a href="/?<?= http_build_query(array_merge($_GET, ['sort' => 'name'])) ?>">Name</a></th>
+                <th scope="col"><a href="/?<?= http_build_query(array_merge($_GET, ['sort' => 'code'])) ?>">Code</a></th>
+                <th scope="col"><a href="/?<?= http_build_query(array_merge($_GET, ['sort' => 'state'])) ?>">State</a></th>
+                <th scope="col"><a href="/?<?= http_build_query(array_merge($_GET, ['sort' => 'city'])) ?>">City</a></th>
+                <th scope="col">Address</th>
+                <th scope="col">Timezone</th>
             </tr>
-        <?php endforeach; ?>
-        </tbody>
+            </thead>
+
+            <tbody>
+            <!--
+                Filtering task #2
+                Replace # in HREF so that link follows to the same page with the filter_by_state key
+                i.e. /?filter_by_state=A or /?filter_by_state=B
+
+                Make sure, that the logic below also works:
+                 - when you apply filter_by_state the page should be equal 1
+                 - when you apply filter_by_state, than filter_by_first_letter (see Filtering task #1) is not reset
+                   i.e. if you have filter_by_first_letter set you can additionally use filter_by_state
+            -->
+            <?php foreach ($airports as $airport):?>
+                <tr>
+                    <td><?= $airport['name'] ?></td>
+                    <td><?= $airport['code'] ?></td>
+                    <td>
+                        <a href="/?<?= http_build_query(array_merge($_GET, ['filter_by_state' => $airport['state'], 'page' => 1])) ?>"><?= $airport['state'] ?></a>
+                    </td>
+                    <td><?= $airport['city'] ?></td>
+                    <td><?= $airport['address'] ?></td>
+                    <td><?= $airport['timezone'] ?></td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        <?php else: ?>
+            <tbody>
+            <thead>
+            <tr>
+                <th scope="col">За вибраними критеріями пошуку не знайдено жодного результату</th>
+            </tr>
+            </thead>
+            </tbody>
+        <?php endif; ?>
     </table>
 
     <!--
@@ -133,37 +146,34 @@ if ($pages>1){
          - use page key (i.e. /?page=1)
          - when you apply pagination - all filters and sorting are not reset
     -->
-    <?php if ($pages > 1) { ?>
+    <?php if ($pages > 1) : ?>
         <nav aria-label="Navigation">
             <ul class="pagination justify-content-center">
                 <?php
-                if ($pages < 8) {
-                    for ($i = 1; $i <= $pages; $i++){ ?>
+                if ($pages < 8) :
+                    for ($i = 1; $i <= $pages; $i++): ?>
                         <li class="page-item <?= $currentPage == $i ? 'active' : '' ?>">
                             <a class="page-link" href="/?<?= http_build_query(array_merge($_GET, ['page' => $i])) ?>"><?= $i ?></a>
                         </li>
-                    <?php }
-                } else {
-                    for ($i = 1; $i <= $pages; $i++){
-                        if ((($i > $currentPage - 3) && ( $i < $currentPage + 3 )) ||(( $i == 1) || ($i == $pages))){
-                            ?>
+                    <?php endfor;
+                else :
+                    for ($i = 1; $i <= $pages; $i++) :
+                        if ((($i > $currentPage - 3) && ( $i < $currentPage + 3 )) ||(( $i == 1) || ($i == $pages))) : ?>
                             <li class="page-item <?= $currentPage == $i ? 'active' : '' ?>">
                                 <a class="page-link" href="/?<?= http_build_query(array_merge($_GET, ['page' => $i])) ?>"><?= $i ?></a>
                             </li>
-                            <?php
-                        }
-                        if (($i==1 && $currentPage > 6) || ($i == $pages - 1 && $currentPage < ($pages - 6))){
-                            $switchPages = $i == 1 ? $currentPage - $perPage : $currentPage + $perPage;
-                            ?>
+                        <?php endif;
+                        if (($i==1 && $currentPage > 6) || ($i == $pages - 1 && $currentPage < ($pages - 6))) :
+                            $switchPages = $i == 1 ? $currentPage - 5 : $currentPage + 5; ?>
                             <li class="page-item <?= $currentPage == $i ? 'active' : '' ?>">
                                 <a class="page-link" href="/?<?= http_build_query(array_merge($_GET, ['page' => $switchPages])) ?>"><?= $i == 1 ? '<<' : '>>' ?></a>
                             </li>
-                        <?php }
-                    }
-                } ?>
+                        <?php endif;
+                    endfor;
+                endif; ?>
             </ul>
         </nav>
-    <?php } ?>
+    <?php endif; ?>
 
 </main>
 </html>

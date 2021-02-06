@@ -22,13 +22,11 @@ function getUniqueFirstLetters(array $airports) : array
 
 function filterByFirstLetter(array $airports, string $firstLetter) : array
 {
-    $resultArr = array();
-    foreach ($airports as $airport) {
-        if (substr($airport["name"], 0, 1) == $firstLetter) {
-            $resultArr []= $airport;
+    return array_filter($airports, function ($airport) use ($firstLetter){
+        if ($airport['name'][0] == $firstLetter ) {
+            return $airport;
         }
-    }
-    return $resultArr;
+    });
 }
 
 function sorting(array $airports, string $value) : array
@@ -40,20 +38,9 @@ function sorting(array $airports, string $value) : array
 
 function filterByState (array $airports, $state) : array
 {
-    $resultArr = array();
-    foreach ($airports as $airport) {
-        if ( $airport["state"] == $state) {
-            $resultArr []= $airport;
+    return array_filter($airports, function ($airport) use ($state){
+        if ($airport["state"] == $state ) {
+            return $airport;
         }
-    }
-    return $resultArr;
-}
-
-function resetPage(array $get) : array
-{
-    $resultArr = $get;
-    if (!empty($get['page'])) {
-        unset($resultArr['page']);
-    }
-    return $resultArr;
+    });
 }

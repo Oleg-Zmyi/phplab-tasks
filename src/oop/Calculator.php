@@ -128,14 +128,14 @@ class Calculator
     public function undo()
     {
         // TODO implement undo logic here
-//        echo (get_class($this->intents[4][0]));
-        echo '<hr>';
-//        var_dump(get_declared_classes());
-        $test = new MultCommand();
-        echo $test->execute(3,5) . ' ';
-
-//        var_dump($test);
-//        var_dump(array_reverse($this->commands));
+//       echo (get_class($this->intents[4][0]));
+//        echo '<hr>';
+//       var_dump(get_declared_classes());
+//        $test = new MultCommand();
+//        echo $test->execute(3,5) . ' ';
+//
+//       var_dump($test);
+//      var_dump(array_reverse($this->commands));
         return $this;
     }
 
