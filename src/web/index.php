@@ -34,7 +34,7 @@ if (!empty($_GET['sort'])) {
 $perPage = 5;
 $pages = ceil(count($airports) / $perPage);
 $currentPage = $_GET["page"] ?? 1;
-if ($pages>1){
+if ($pages > 1){
     $airports = array_slice( $airports, (($currentPage - 1) * $perPage),   $perPage );
 }
 
@@ -71,7 +71,6 @@ if ($pages>1){
         Filter by first letter:
 
         <?php foreach (getUniqueFirstLetters(require './airports.php') as $letter): ?>
-            <!--            <a href="?filter_by_first_letter=--><?//= $letter ?><!--">--><?//= $letter ?><!--</a>-->
             <a href="?<?= http_build_query(array_merge($_GET, ['filter_by_first_letter' => $letter, 'page' => 1])) ?>"><?= $letter ?></a>
         <?php endforeach; ?>
 
@@ -130,7 +129,7 @@ if ($pages>1){
             <tbody>
             <thead>
             <tr>
-                <th scope="col">За вибраними критеріями пошуку не знайдено жодного результату</th>
+                <th scope="col">За вибраними критеріями не знайдено жодного результату</th>
             </tr>
             </thead>
             </tbody>
@@ -163,7 +162,7 @@ if ($pages>1){
                                 <a class="page-link" href="/?<?= http_build_query(array_merge($_GET, ['page' => $i])) ?>"><?= $i ?></a>
                             </li>
                         <?php endif;
-                        if (($i==1 && $currentPage > 6) || ($i == $pages - 1 && $currentPage < ($pages - 6))) :
+                        if (($i == 1 && $currentPage > 6) || ($i == $pages - 1 && $currentPage < ($pages - 6))) :
                             $switchPages = $i == 1 ? $currentPage - 5 : $currentPage + 5; ?>
                             <li class="page-item <?= $currentPage == $i ? 'active' : '' ?>">
                                 <a class="page-link" href="/?<?= http_build_query(array_merge($_GET, ['page' => $switchPages])) ?>"><?= $i == 1 ? '<<' : '>>' ?></a>
