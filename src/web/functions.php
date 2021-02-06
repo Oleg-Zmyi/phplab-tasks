@@ -13,7 +13,7 @@ function getUniqueFirstLetters(array $airports) : array
 {
     $letters = array();
     foreach ($airports as $airport) {
-        $letters []= substr($airport["name"], 0, 1);
+        $letters []= $airport["name"][0];
     }
     $firstLetters = array_unique($letters);
     sort($firstLetters);
