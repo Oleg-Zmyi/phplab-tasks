@@ -130,11 +130,10 @@ class Calculator
         // TODO implement undo logic here
 
         if ($this->intents){
-            unset($this->intents[array_key_last($this->intents)]);
-            $this->intents = array_values($this->intents);
+            array_pop($this->intents);
         }
         if (count($this->intents) > 0){
-            $this->intents[array_key_last($this->intents)]['undo'] = true;
+            array_merge($this->intents, ['undo' => true]);
         }
 
         return $this;
