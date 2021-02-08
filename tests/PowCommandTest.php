@@ -1,12 +1,12 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use src\oop\Commands\SumCommand;
+use src\oop\Commands\PowCommand;
 
-class SumCommandTest extends TestCase
+class PowCommandTest extends TestCase
 {
     /**
-     * @var SumCommand
+     * @var PowCommand
      */
     private $command;
 
@@ -17,7 +17,7 @@ class SumCommandTest extends TestCase
      */
     public function setUp(): void
     {
-        $this->command = new SumCommand();
+        $this->command = new PowCommand();
     }
 
     /**
@@ -26,10 +26,11 @@ class SumCommandTest extends TestCase
     public function commandPositiveDataProvider()
     {
         return [
-            [1, 1, 2],
-            [0.1, 0.1, 0.2],
-            [-1, 2, 1],
-            ['5', 10, 15],
+            [4, 6, 4096],
+            [17, 5, 1419857],
+            [3, 3, 27],
+            [5, 2, 25],
+            [4, 2, 16],
         ];
     }
 

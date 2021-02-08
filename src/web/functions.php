@@ -22,10 +22,8 @@ function getUniqueFirstLetters(array $airports) : array
 
 function filterByFirstLetter(array $airports, string $firstLetter) : array
 {
-    return array_filter($airports, function ($airport) use ($firstLetter) {
-        if ($airport['name'][0] == $firstLetter ) {
-            return $airport;
-        }
+    return array_filter($airports, function ($airport) use ($firstLetter){
+        return $airport['name'][0] == $firstLetter;
     });
 }
 
@@ -38,9 +36,8 @@ function sorting(array $airports, string $value) : array
 
 function filterByState (array $airports, $state) : array
 {
-    return array_filter($airports, function ($airport) use ($state) {
-        if ($airport["state"] == $state ) {
-            return $airport;
-        }
+    return array_filter($airports, function ($airport) use ($state){
+        return $airport['state'] == $state;
     });
 }
+

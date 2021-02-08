@@ -148,28 +148,27 @@ if ($pages > 1){
     <?php if ($pages > 1) : ?>
         <nav aria-label="Navigation">
             <ul class="pagination justify-content-center">
-                <?php
-                if ($pages < 8) :
-                    for ($i = 1; $i <= $pages; $i++): ?>
+                <?php if ($pages < 8) : ?>
+                    <?php for ($i = 1; $i <= $pages; $i++): ?>
                         <li class="page-item <?= $currentPage == $i ? 'active' : '' ?>">
                             <a class="page-link" href="/?<?= http_build_query(array_merge($_GET, ['page' => $i])) ?>"><?= $i ?></a>
                         </li>
-                    <?php endfor;
-                else :
-                    for ($i = 1; $i <= $pages; $i++) :
-                        if ((($i > $currentPage - 3) && ( $i < $currentPage + 3 )) ||(( $i == 1) || ($i == $pages))) : ?>
+                    <?php endfor; ?>
+                <?php else : ?>
+                    <?php for ($i = 1; $i <= $pages; $i++) : ?>
+                        <?php if ((($i > $currentPage - 3) && ( $i < $currentPage + 3 )) ||(( $i == 1) || ($i == $pages))) : ?>
                             <li class="page-item <?= $currentPage == $i ? 'active' : '' ?>">
                                 <a class="page-link" href="/?<?= http_build_query(array_merge($_GET, ['page' => $i])) ?>"><?= $i ?></a>
                             </li>
-                        <?php endif;
-                        if (($i == 1 && $currentPage > 6) || ($i == $pages - 1 && $currentPage < ($pages - 6))) :
-                            $switchPages = $i == 1 ? $currentPage - 5 : $currentPage + 5; ?>
+                        <?php endif; ?>
+                        <?php if (($i == 1 && $currentPage > 6) || ($i == $pages - 1 && $currentPage < ($pages - 6))) : ?>
+                            <?php $switchPages = $i == 1 ? $currentPage - 5 : $currentPage + 5; ?>
                             <li class="page-item <?= $currentPage == $i ? 'active' : '' ?>">
                                 <a class="page-link" href="/?<?= http_build_query(array_merge($_GET, ['page' => $switchPages])) ?>"><?= $i == 1 ? '<<' : '>>' ?></a>
                             </li>
-                        <?php endif;
-                    endfor;
-                endif; ?>
+                        <?php endif; ?>
+                    <?php endfor; ?>
+                <?php endif; ?>
             </ul>
         </nav>
     <?php endif; ?>

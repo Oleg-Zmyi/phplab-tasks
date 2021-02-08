@@ -2,8 +2,8 @@
 
 namespace src\oop;
 
+use phpDocumentor\Reflection\Types\This;
 use src\oop\Commands\CommandInterface;
-use src\oop\Commands\MultCommand;
 
 class Calculator
 {
@@ -128,14 +128,15 @@ class Calculator
     public function undo()
     {
         // TODO implement undo logic here
-//       echo (get_class($this->intents[4][0]));
-//        echo '<hr>';
-//       var_dump(get_declared_classes());
-//        $test = new MultCommand();
-//        echo $test->execute(3,5) . ' ';
-//
-//       var_dump($test);
-//      var_dump(array_reverse($this->commands));
+
+        if ($this->intents){
+            unset($this->intents[array_key_last($this->intents)]);
+            $this->intents = array_values($this->intents);
+        }
+        if (count($this->intents) > 0){
+            $this->intents[array_key_last($this->intents)]['undo'] = true;
+        }
+
         return $this;
     }
 
@@ -147,6 +148,14 @@ class Calculator
     public function replay()
     {
         // TODO implement replay logic here
+
+        if (count($this->intents) > 0){
+            if (array_key_exists('undo', $this->intents[array_key_last($this->intents)])){
+               $this->undo();
+            } else {
+                $this->intents[] = $this->intents[array_key_last($this->intents)];
+            }
+        }
 
         return $this;
     }
