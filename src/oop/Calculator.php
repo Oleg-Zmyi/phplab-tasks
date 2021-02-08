@@ -133,7 +133,7 @@ class Calculator
             array_pop($this->intents);
         }
         if (count($this->intents) > 0){
-            array_merge($this->intents, ['undo' => true]);
+            $this->intents[array_key_last($this->intents)]['undo'] = true;
         }
 
         return $this;
