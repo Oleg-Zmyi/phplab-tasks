@@ -19,6 +19,10 @@ $calc->addCommand('^', new PowCommand());
 // will output 2
 echo $calc->init(1)
     ->compute('+', 1)
+    ->compute('-', 4)
+    ->compute('+', 1)
+    ->compute('+', 1)
+    ->undo()
     ->getResult();
 
 echo PHP_EOL;
